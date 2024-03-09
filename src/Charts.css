@@ -1,0 +1,11 @@
+.Charts {
+  width: 100%;
+  height: 100vh; /* Set height to 100% of viewport height */
+  display: flex; /* Make the container a flex container */
+  flex-direction: column; /* Arrange charts vertically */
+}
+
+.dataCard {
+  flex: 1; /* Distribute remaining space equally among chart cards */
+  max-width: 50%; /* Make each chart card take full width */
+}
