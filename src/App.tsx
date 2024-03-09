@@ -70,10 +70,10 @@ function App() {
       {/* <LeavesChart leavesData={data} /> */}
       {/* <StackedExample />
        */}
-      {/* <CalendarIntegration></CalendarIntegration>
-      <DemoApp /> */}
+      {/* <CalendarIntegration></CalendarIntegration> */}
+      {/* <DemoApp /> */}
       <LinkCalenndar />
-      <YourComponent />
+      {/* <YourComponent /> */}
     </>
   );
 }

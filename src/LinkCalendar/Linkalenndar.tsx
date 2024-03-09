@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid"; //
 import timeGridPlugin from "@fullcalendar/timegrid"; //
@@ -7,8 +7,13 @@ import bootstrap5Plugin from "@fullcalendar/bootstrap5";
 import EVENTS from "./Link-Events";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import "@fullcalendar/bootstrap5";
 import { createEventId } from "../FullCalendar/Events";
-import { DateSelectArg, EventClickArg } from "fullcalendar/index.js";
+import {
+  DateSelectArg,
+  EventClickArg,
+  EventContentArg,
+} from "fullcalendar/index.js";
 import multiMonthPlugin from "@fullcalendar/multimonth";
 
 const handleDateClick = (arg: any) => {
@@ -49,10 +54,45 @@ const handleViewChange = (view: string) => {
   console.log("Selected view:", view);
 };
 
-const LinkCalenndar = () => {
+function renderEventContent(eventContent: EventContentArg) {
   return (
     <>
+      <b>YB: {eventContent.timeText}</b>
+      <i> {eventContent.event.title}</i>
+    </>
+  );
+}
+const LinkCalenndar = () => {
+  const calendarRef = useRef<FullCalendar>(null);
+
+  return (
+    <>
+      <div className="custom-header">
+        <button
+          className="fc-prev-button fc-button fc-state-default fc-corner-left"
+          onClick={() => calendarRef.current?.getApi().prev()}
+        >
+          <span className="fc-icon fc-icon-left-single-arrow"></span>
+        </button>
+        {/* <h1>{calendarRef.current?.getApi().title()}</h1> */}
+        <button
+          className="fc-next-button fc-button fc-state-default fc-corner-right"
+          onClick={() => calendarRef.current?.getApi().next()}
+        >
+          <span className="fc-icon fc-icon-right-single-arrow"></span>
+        </button>
+
+        <button
+          className=" fc-button fc-state-default "
+          onClick={() => calendarRef.current?.getApi().today()}
+        >
+          Today
+        </button>
+
+        {/* <h2>January 2019</h2> */}
+      </div>
       <FullCalendar
+        ref={calendarRef}
         plugins={[
           dayGridPlugin,
           timeGridPlugin,
@@ -77,12 +117,18 @@ const LinkCalenndar = () => {
         themeSystem="bootstrap5"
         height="650px"
         headerToolbar={{
-          start: "timeGridDay,dayGridMonth,timeGridWeek,multiMonthYear",
-          center: "prev,title,next",
-          end: "today",
+          start: "",
+          center: "",
+          end: "",
         }}
+        // headerToolbar={{
+        //   start: "timeGridDay,dayGridMonth,timeGridWeek,multiMonthYear",
+        //   center: "prev,title,next",
+        //   end: "today",
+        // }}
         editable={true}
         selectable={true}
+        eventContent={renderEventContent}
       />
     </>
   );

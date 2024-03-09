@@ -129,8 +129,8 @@ export default class DemoApp extends React.Component<{}, DemoAppState> {
 function renderEventContent(eventContent: EventContentArg) {
   return (
     <>
-      <b>{eventContent.timeText}</b>
-      <i>{eventContent.event.title}</i>
+      <b> HI {eventContent.timeText}</b>
+      <i>HELLO {eventContent.event.title}</i>
     </>
   );
 }
