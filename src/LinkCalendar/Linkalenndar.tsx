@@ -1,10 +1,11 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid"; //
 import timeGridPlugin from "@fullcalendar/timegrid"; //
 import interactionPlugin from "@fullcalendar/interaction";
 import bootstrap5Plugin from "@fullcalendar/bootstrap5";
 import EVENTS from "./Link-Events";
+import EVENTS1 from "./Link-Events1";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "@fullcalendar/bootstrap5";
@@ -23,7 +24,12 @@ const handleDateClick = (arg: any) => {
 
 const handleDateSelect = (selectInfo: DateSelectArg) => {
   let title = prompt("Please enter a new title for your event");
+  //TODO
+
+  //Change this to store it in events array
   let calendarApi = selectInfo.view.calendar;
+  console.log("calendarAPI: ", calendarApi);
+  console.log("EVENTS:", EVENTS);
 
   calendarApi.unselect(); // clear date selection
 
@@ -65,29 +71,74 @@ function renderEventContent(eventContent: EventContentArg) {
 const LinkCalenndar = () => {
   const calendarRef = useRef<FullCalendar>(null);
 
+  const [calendarTitle, setCalendarTitle] = useState<string>("");
+
+  useEffect(() => {
+    // Set the initial title when the component mounts
+    setCalendarTitle(calendarRef.current?.getApi().view.title || "");
+  }, []);
+
+  const updateCalendarTitle = () => {
+    setCalendarTitle(calendarRef.current?.getApi().view.title || "");
+  };
+
+  const combinedEvents = [...EVENTS, ...EVENTS1].map((event) => ({
+    ...event,
+    id: createEventId(), // create a new ID for each event
+  }));
+
   return (
     <>
       <div className="custom-header">
         <button
           className="fc-prev-button fc-button fc-state-default fc-corner-left"
-          onClick={() => calendarRef.current?.getApi().prev()}
+          onClick={() => {
+            calendarRef.current?.getApi().prev();
+            updateCalendarTitle();
+          }}
         >
           <span className="fc-icon fc-icon-left-single-arrow"></span>
         </button>
-        {/* <h1>{calendarRef.current?.getApi().title()}</h1> */}
+
+        <h1 style={{ display: "inline-block" }}>
+          {
+            // calendarTitle === null
+            //   ?
+            calendarTitle
+            //   :
+            // calendarRef.current?.getApi().view.title
+          }
+        </h1>
         <button
           className="fc-next-button fc-button fc-state-default fc-corner-right"
-          onClick={() => calendarRef.current?.getApi().next()}
+          onClick={() => {
+            calendarRef.current?.getApi().next();
+            console.log("API: ", calendarRef.current?.getApi());
+            updateCalendarTitle();
+          }}
         >
           <span className="fc-icon fc-icon-right-single-arrow"></span>
         </button>
 
         <button
           className=" fc-button fc-state-default "
-          onClick={() => calendarRef.current?.getApi().today()}
+          onClick={() => {
+            calendarRef.current?.getApi().today();
+            updateCalendarTitle();
+          }}
         >
           Today
         </button>
+        <button
+          className=" fc-button fc-state-default "
+          onClick={() => {
+            calendarRef.current?.getApi().changeView("timeGridWeek");
+            updateCalendarTitle();
+          }}
+        >
+          test
+        </button>
+        {/* <h1> {calendarRef.current?.getApi().view.title}</h1> */}
 
         {/* <h2>January 2019</h2> */}
       </div>
@@ -105,7 +156,7 @@ const LinkCalenndar = () => {
         // dateClick={handleDateClick}
         initialView="dayGridMonth"
         weekends={true}
-        events={EVENTS}
+        events={combinedEvents}
         eventTimeFormat={{
           // like '14:30:00'
           hour: "2-digit",
