@@ -58,10 +58,13 @@ const MyForm: React.FC = () => {
     handleSubmit,
     control,
     reset,
+    watch,
     formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(schema),
   });
+
+  const selectedColor = watch("color");
 
   // Form submit handler
   const onSubmit: SubmitHandler<FormData> = (data) => {
@@ -113,6 +116,7 @@ const MyForm: React.FC = () => {
         {colorOptions.map((color, index) => (
           <div key={index} className="form-check form-check-inline">
             <input
+              style={{ backgroundColor: color }}
               type="radio"
               {...register("color")}
               value={color}
@@ -120,7 +124,10 @@ const MyForm: React.FC = () => {
               className="form-check-input"
             />
             <label htmlFor={color} className="form-check-label">
-              {color}
+              {/* {color} */}
+              {selectedColor === color && (
+                <span style={{ marginLeft: "5px" }}>✔</span>
+              )}
             </label>
           </div>
         ))}
