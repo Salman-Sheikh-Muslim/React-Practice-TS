@@ -9,6 +9,7 @@ import CalendarIntegration from "./Calendar";
 import DemoApp from "./FullCalendar/FullCalendar";
 import LinkCalenndar from "./LinkCalendar/Linkalenndar";
 import YourComponent from "./LinkCalendar/new";
+import MyForm from "./FormEvent";
 
 function App() {
   const [userData, setUserData] = useState({
@@ -74,6 +75,7 @@ function App() {
       {/* <DemoApp /> */}
       <LinkCalenndar />
       {/* <YourComponent /> */}
+      <MyForm />
     </>
   );
 }
