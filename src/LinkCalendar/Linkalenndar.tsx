@@ -87,9 +87,43 @@ const LinkCalenndar = () => {
     id: createEventId(), // create a new ID for each event
   }));
 
+  const handleDropdownChange = (selectedView: string) => {
+    calendarRef.current?.getApi().changeView(selectedView);
+    updateCalendarTitle();
+  };
+
+  const dropdownOptions = [
+    "timeGridDay",
+    "dayGridMonth",
+    "timeGridWeek",
+    "multiMonthYear",
+  ];
+  const textDropDown = ["Day", "Month", "Week", "Year"];
   return (
     <>
       <div className="custom-header">
+        <select
+          className="fc-button fc-state-default"
+          onChange={(e) => handleDropdownChange(e.target.value)}
+        >
+          {/* {dropdownOptions.map((option) => (
+          <option key={option} value={option}>
+            {option}
+          </option>
+        ))} */}
+          <option key={1} value={dropdownOptions[0]}>
+            {textDropDown[0]}
+          </option>
+          <option key={2} value={dropdownOptions[1]} selected>
+            {textDropDown[1]}
+          </option>
+          <option key={3} value={dropdownOptions[2]}>
+            {textDropDown[2]}
+          </option>
+          <option key={4} value={dropdownOptions[3]}>
+            {textDropDown[3]}
+          </option>
+        </select>
         <button
           className="fc-prev-button fc-button fc-state-default fc-corner-left"
           onClick={() => {
@@ -129,7 +163,7 @@ const LinkCalenndar = () => {
         >
           Today
         </button>
-        <button
+        {/* <button
           className=" fc-button fc-state-default "
           onClick={() => {
             calendarRef.current?.getApi().changeView("timeGridWeek");
@@ -137,7 +171,7 @@ const LinkCalenndar = () => {
           }}
         >
           test
-        </button>
+        </button> */}
         {/* <h1> {calendarRef.current?.getApi().view.title}</h1> */}
 
         {/* <h2>January 2019</h2> */}
