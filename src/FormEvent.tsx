@@ -31,13 +31,12 @@ const schema = z.object({
 // Define the color options
 const colorOptions = [
   "Red",
-  "Blue",
+  "Aqua",
   "Green",
   "Yellow",
   "Orange",
   "Purple",
   "Pink",
-  "Brown",
 ];
 
 // Define the form data interface
@@ -153,13 +152,16 @@ const MyForm: React.FC = () => {
         </label>
         <div className="form-check form-switch">
           <input
+            {...register("allDay")}
             type="checkbox"
             className="form-check-input"
             id="toggleSwitch"
             checked={toggleValue}
             onChange={handleToggleChange}
           />
-          <label className="form-check-label" htmlFor="toggleSwitch"></label>
+          <label className="form-check-label" htmlFor="toggleSwitch">
+            All Day
+          </label>
         </div>
       </div>
 
