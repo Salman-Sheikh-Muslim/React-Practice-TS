@@ -10,7 +10,7 @@ import "react-datepicker/dist/react-datepicker.css";
 const schema = z.object({
   title: z.string().min(3, "Title must be at least 3 characters"),
   description: z.string(),
-  // startDate: z.string(),
+  startDate: z.date(),
   // .string()
   // .refine(
   //   (date) => /\d{2}\/\d{2}\/\d{4} \d{2}:\d{2} [APMapm]{2}/.test(date),
@@ -59,6 +59,7 @@ const MyForm: React.FC = () => {
     handleSubmit,
     control,
     reset,
+    setValue,
     watch,
     formState: { errors },
   } = useForm<FormData>({
@@ -81,6 +82,14 @@ const MyForm: React.FC = () => {
 
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
+  const [date, setDate] = React.useState(new Date(Date.now()));
+
+  const handleChange = (dateChange: any) => {
+    setValue("startDate", dateChange, {
+      shouldDirty: true,
+    });
+    setDate(dateChange);
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="my-4">
@@ -107,7 +116,7 @@ const MyForm: React.FC = () => {
           showTimeSelect
           dateFormat="dd/MM/yyyy h:mm aa"
         /> */}
-        <DatePicker
+        {/* <DatePicker
           {...register("startDate")}
           // value={startDate.toDateString()}
           selected={startDate}
@@ -120,9 +129,8 @@ const MyForm: React.FC = () => {
 
         {errors.startDate && (
           <p className="text-danger">{errors.startDate.message}</p>
-        )}
+        )}*/}
       </div>
-
       <div className="mb-3">
         <label className="form-label">End Date</label>
         {/* <DatePicker
@@ -148,6 +156,23 @@ const MyForm: React.FC = () => {
         )}
       </div>
 
+      <Controller
+        name="startDate"
+        // {...register("startDate")}
+        control={control}
+        defaultValue={date}
+        render={() => (
+          <DatePicker
+            showTimeSelect
+            timeFormat="HH:mm"
+            timeIntervals={15}
+            dateFormat="dd/MM/yyyy h:mm aa"
+            selected={date}
+            placeholderText="Select date"
+            onChange={handleChange}
+          />
+        )}
+      />
       {/* <div className="mb-3">
         <label className="form-label">Start Date</label>
         <input
