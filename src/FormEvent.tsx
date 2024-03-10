@@ -1,5 +1,5 @@
 // Import necessary dependencies
-import React from "react";
+import React, { useState } from "react";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -71,6 +71,13 @@ const MyForm: React.FC = () => {
     console.log(data); // Handle form submission logic here
   };
 
+  const [toggleValue, setToggleValue] = useState(false);
+
+  // Handler function for toggle changes
+  const handleToggleChange = () => {
+    setToggleValue((prevValue) => !prevValue);
+  };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="my-4">
       <div className="mb-3">
@@ -126,11 +133,34 @@ const MyForm: React.FC = () => {
             <label htmlFor={color} className="form-check-label">
               {/* {color} */}
               {selectedColor === color && (
-                <span style={{ marginLeft: "5px" }}>✔</span>
+                <span
+                  style={{
+                    fontWeight: "900",
+                    color: color,
+                  }}
+                >
+                  {color}
+                </span>
               )}
             </label>
           </div>
         ))}
+      </div>
+
+      <div className="mb-3">
+        <label className="form-label">
+          Toggle: {toggleValue ? "On" : "Off"}
+        </label>
+        <div className="form-check form-switch">
+          <input
+            type="checkbox"
+            className="form-check-input"
+            id="toggleSwitch"
+            checked={toggleValue}
+            onChange={handleToggleChange}
+          />
+          <label className="form-check-label" htmlFor="toggleSwitch"></label>
+        </div>
       </div>
 
       {/* <div>
