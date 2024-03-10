@@ -120,6 +120,7 @@ const LinkCalenndar = () => {
         <Row className="align-items-center justify-content-center">
           <Col lg={2} md={2} sm={2} xs={1} className="">
             <select
+              defaultValue={dropdownOptions[1]}
               className="btn"
               style={{ border: "2px solid", borderColor: "#0D6EFD" }}
               onChange={(e) => handleDropdownChange(e.target.value)}
@@ -129,10 +130,11 @@ const LinkCalenndar = () => {
             {option}
           </option>
         ))} */}
+
               <option key={1} value={dropdownOptions[0]}>
                 {textDropDown[0]}
               </option>
-              <option key={2} value={dropdownOptions[1]} selected>
+              <option key={2} value={dropdownOptions[1]}>
                 {textDropDown[1]}
               </option>
               <option key={3} value={dropdownOptions[2]}>

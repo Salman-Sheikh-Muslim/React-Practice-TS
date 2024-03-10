@@ -10,22 +10,22 @@ import "react-datepicker/dist/react-datepicker.css";
 const schema = z.object({
   title: z.string().min(3, "Title must be at least 3 characters"),
   description: z.string(),
-  startDate: z
-    .string()
-    .refine(
-      (date) => /\d{2}\/\d{2}\/\d{4} \d{2}:\d{2} [APMapm]{2}/.test(date),
-      {
-        message: "Invalid date format. Please use DD/MM/YYYY HH:mm AM/PM.",
-      }
-    ),
-  endDate: z
-    .string()
-    .refine(
-      (date) => /\d{2}\/\d{2}\/\d{4} \d{2}:\d{2} [APMapm]{2}/.test(date),
-      {
-        message: "Invalid date format. Please use DD/MM/YYYY HH:mm AM/PM.",
-      }
-    ),
+  // startDate: z.string(),
+  // .string()
+  // .refine(
+  //   (date) => /\d{2}\/\d{2}\/\d{4} \d{2}:\d{2} [APMapm]{2}/.test(date),
+  //   {
+  //     message: "Invalid date format. Please use DD/MM/YYYY HH:mm AM/PM.",
+  //   }
+  // ),
+  //  endDate: z.date(),
+  // .string()
+  // .refine(
+  //   (date) => /\d{2}\/\d{2}\/\d{4} \d{2}:\d{2} [APMapm]{2}/.test(date),
+  //   {
+  //     message: "Invalid date format. Please use DD/MM/YYYY HH:mm AM/PM.",
+  //   }
+  // ),
   color: z.string(),
   allDay: z.boolean(),
 });
@@ -45,8 +45,8 @@ const colorOptions = [
 interface FormData {
   title: string;
   description: string;
-  startDate: string;
-  endDate: string;
+  startDate: Date;
+  endDate: Date;
   color: string;
   allDay: boolean;
 }
@@ -108,8 +108,10 @@ const MyForm: React.FC = () => {
           dateFormat="dd/MM/yyyy h:mm aa"
         /> */}
         <DatePicker
+          {...register("startDate")}
+          // value={startDate.toDateString()}
           selected={startDate}
-          onChange={(date) => setStartDate(date!!)}
+          onChange={(date) => setStartDate(date as Date)}
           showTimeSelect
           timeFormat="HH:mm"
           timeIntervals={15}
@@ -132,8 +134,9 @@ const MyForm: React.FC = () => {
         /> */}
 
         <DatePicker
+          {...register("endDate")}
           selected={endDate}
-          onChange={(date) => setEndDate(date!!)}
+          onChange={(date) => setEndDate(date || new Date())}
           showTimeSelect
           timeFormat="HH:mm"
           timeIntervals={15}
