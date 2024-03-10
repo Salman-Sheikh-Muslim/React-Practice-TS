@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 // Define the Zod schema for validation
 const schema = z.object({
@@ -77,6 +79,9 @@ const MyForm: React.FC = () => {
     setToggleValue((prevValue) => !prevValue);
   };
 
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="my-4">
       <div className="mb-3">
@@ -94,6 +99,53 @@ const MyForm: React.FC = () => {
       </div>
 
       <div className="mb-3">
+        <label className="form-label">Start Date</label>
+        {/* <DatePicker
+          {...register("startDate")}
+          className="form-control"
+          placeholderText="Select Start Date"
+          showTimeSelect
+          dateFormat="dd/MM/yyyy h:mm aa"
+        /> */}
+        <DatePicker
+          selected={startDate}
+          onChange={(date) => setStartDate(date!!)}
+          showTimeSelect
+          timeFormat="HH:mm"
+          timeIntervals={15}
+          dateFormat="dd/MM/yyyy h:mm aa"
+        />
+
+        {errors.startDate && (
+          <p className="text-danger">{errors.startDate.message}</p>
+        )}
+      </div>
+
+      <div className="mb-3">
+        <label className="form-label">End Date</label>
+        {/* <DatePicker
+          {...register("endDate")}
+          className="form-control"
+          placeholderText="Select End Date"
+          showTimeSelect
+          dateFormat="dd/MM/yyyy h:mm aa"
+        /> */}
+
+        <DatePicker
+          selected={endDate}
+          onChange={(date) => setEndDate(date!!)}
+          showTimeSelect
+          timeFormat="HH:mm"
+          timeIntervals={15}
+          dateFormat="dd/MM/yyyy h:mm aa"
+        />
+
+        {errors.endDate && (
+          <p className="text-danger">{errors.endDate.message}</p>
+        )}
+      </div>
+
+      {/* <div className="mb-3">
         <label className="form-label">Start Date</label>
         <input
           {...register("startDate")}
@@ -115,7 +167,7 @@ const MyForm: React.FC = () => {
         {errors.endDate && (
           <p className="text-danger">{errors.endDate.message}</p>
         )}
-      </div>
+      </div> */}
       {selectedColor}
       <div className="mb-3" style={{ backgroundColor: selectedColor }}>
         <label className="form-label">Color</label>
