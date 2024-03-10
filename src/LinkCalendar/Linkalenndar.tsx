@@ -111,16 +111,17 @@ const LinkCalenndar = () => {
   return (
     <>
       <div
-        className="custom-header"
+        className="custom-header "
         style={{
           marginTop: "10px",
           padding: "10px",
         }}
       >
-        <Row>
-          <Col lg={2} md={2} sm={2} xs={1}>
+        <Row className="align-items-center justify-content-center">
+          <Col lg={2} md={2} sm={2} xs={1} className="">
             <select
-              className="fc-button fc-state-default"
+              className="btn"
+              style={{ border: "2px solid", borderColor: "#0D6EFD" }}
               onChange={(e) => handleDropdownChange(e.target.value)}
             >
               {/* {dropdownOptions.map((option) => (
@@ -143,9 +144,9 @@ const LinkCalenndar = () => {
             </select>
           </Col>
 
-          <Col lg={8} md={8} sm={8} xs={10} className="text-center">
+          <Col lg={8} md={8} sm={8} xs={10} className="text-center ">
             <Button
-              style={{ marginTop: "-18px" }}
+              // style={{ marginTop: "-18px" }}
               className="me-3"
               onClick={() => {
                 calendarRef.current?.getApi().prev();
@@ -158,7 +159,9 @@ const LinkCalenndar = () => {
             <h1
               style={{
                 display: "inline-block",
-                padding: "0",
+                // fontWeight: "bold",
+                fontSize: "30px",
+                // padding: "0 10px",
               }}
             >
               {
@@ -171,7 +174,7 @@ const LinkCalenndar = () => {
             </h1>
             <Button
               className="ms-3"
-              style={{ marginTop: "-18px" }}
+              // style={{ marginTop: "-18px" }}
               onClick={() => {
                 calendarRef.current?.getApi().next();
                 console.log("API: ", calendarRef.current?.getApi());
