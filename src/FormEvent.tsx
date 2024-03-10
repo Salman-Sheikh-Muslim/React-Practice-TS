@@ -117,8 +117,8 @@ const MyForm: React.FC = () => {
           <p className="text-danger">{errors.endDate.message}</p>
         )}
       </div>
-
-      <div className="mb-3">
+      {selectedColor}
+      <div className="mb-3" style={{ backgroundColor: selectedColor }}>
         <label className="form-label">Color</label>
         {colorOptions.map((color, index) => (
           <div key={index} className="form-check form-check-inline">
@@ -135,8 +135,8 @@ const MyForm: React.FC = () => {
               {selectedColor === color && (
                 <span
                   style={{
-                    fontWeight: "900",
-                    color: color,
+                    fontWeight: "bolder",
+                    color: "black",
                   }}
                 >
                   {color}

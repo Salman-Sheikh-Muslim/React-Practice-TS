@@ -10,12 +10,21 @@ import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "@fullcalendar/bootstrap5";
 import { createEventId } from "../FullCalendar/Events";
+import Button from "react-bootstrap/Button";
+import { Col, Row } from "react-bootstrap";
+
 import {
   DateSelectArg,
   EventClickArg,
   EventContentArg,
 } from "fullcalendar/index.js";
 import multiMonthPlugin from "@fullcalendar/multimonth";
+import {
+  ArrowRight,
+  ChevronDoubleLeft,
+  ChevronDoubleRight,
+  ChevronRight,
+} from "react-bootstrap-icons";
 
 const handleDateClick = (arg: any) => {
   alert(arg.dateStr);
@@ -101,69 +110,90 @@ const LinkCalenndar = () => {
   const textDropDown = ["Day", "Month", "Week", "Year"];
   return (
     <>
-      <div className="custom-header">
-        <select
-          className="fc-button fc-state-default"
-          onChange={(e) => handleDropdownChange(e.target.value)}
-        >
-          {/* {dropdownOptions.map((option) => (
+      <div
+        className="custom-header"
+        style={{
+          marginTop: "10px",
+          padding: "10px",
+        }}
+      >
+        <Row>
+          <Col lg={2} md={2} sm={2} xs={1}>
+            <select
+              className="fc-button fc-state-default"
+              onChange={(e) => handleDropdownChange(e.target.value)}
+            >
+              {/* {dropdownOptions.map((option) => (
           <option key={option} value={option}>
             {option}
           </option>
         ))} */}
-          <option key={1} value={dropdownOptions[0]}>
-            {textDropDown[0]}
-          </option>
-          <option key={2} value={dropdownOptions[1]} selected>
-            {textDropDown[1]}
-          </option>
-          <option key={3} value={dropdownOptions[2]}>
-            {textDropDown[2]}
-          </option>
-          <option key={4} value={dropdownOptions[3]}>
-            {textDropDown[3]}
-          </option>
-        </select>
-        <button
-          className="fc-prev-button fc-button fc-state-default fc-corner-left"
-          onClick={() => {
-            calendarRef.current?.getApi().prev();
-            updateCalendarTitle();
-          }}
-        >
-          <span className="fc-icon fc-icon-left-single-arrow"></span>
-        </button>
+              <option key={1} value={dropdownOptions[0]}>
+                {textDropDown[0]}
+              </option>
+              <option key={2} value={dropdownOptions[1]} selected>
+                {textDropDown[1]}
+              </option>
+              <option key={3} value={dropdownOptions[2]}>
+                {textDropDown[2]}
+              </option>
+              <option key={4} value={dropdownOptions[3]}>
+                {textDropDown[3]}
+              </option>
+            </select>
+          </Col>
 
-        <h1 style={{ display: "inline-block" }}>
-          {
-            // calendarTitle === null
-            //   ?
-            calendarTitle
-            //   :
-            // calendarRef.current?.getApi().view.title
-          }
-        </h1>
-        <button
-          className="fc-next-button fc-button fc-state-default fc-corner-right"
-          onClick={() => {
-            calendarRef.current?.getApi().next();
-            console.log("API: ", calendarRef.current?.getApi());
-            updateCalendarTitle();
-          }}
-        >
-          <span className="fc-icon fc-icon-right-single-arrow"></span>
-        </button>
+          <Col lg={8} md={8} sm={8} xs={10} className="text-center">
+            <Button
+              style={{ marginTop: "-18px" }}
+              className="me-3"
+              onClick={() => {
+                calendarRef.current?.getApi().prev();
+                updateCalendarTitle();
+              }}
+            >
+              <ChevronDoubleLeft color="white" size={20} />
+            </Button>
 
-        <button
-          className=" fc-button fc-state-default "
-          onClick={() => {
-            calendarRef.current?.getApi().today();
-            updateCalendarTitle();
-          }}
-        >
-          Today
-        </button>
-        {/* <button
+            <h1
+              style={{
+                display: "inline-block",
+                padding: "0",
+              }}
+            >
+              {
+                // calendarTitle === null
+                //   ?
+                calendarTitle
+                //   :
+                // calendarRef.current?.getApi().view.title
+              }
+            </h1>
+            <Button
+              className="ms-3"
+              style={{ marginTop: "-18px" }}
+              onClick={() => {
+                calendarRef.current?.getApi().next();
+                console.log("API: ", calendarRef.current?.getApi());
+                updateCalendarTitle();
+              }}
+            >
+              <ChevronDoubleRight color="white" size={20} />
+            </Button>
+          </Col>
+
+          <Col lg={2} md={2} sm={2} xs={1} className="text-end">
+            <Button
+              className=""
+              onClick={() => {
+                calendarRef.current?.getApi().today();
+                updateCalendarTitle();
+              }}
+            >
+              Today
+            </Button>
+          </Col>
+          {/* <button
           className=" fc-button fc-state-default "
           onClick={() => {
             calendarRef.current?.getApi().changeView("timeGridWeek");
@@ -172,9 +202,10 @@ const LinkCalenndar = () => {
         >
           test
         </button> */}
-        {/* <h1> {calendarRef.current?.getApi().view.title}</h1> */}
+          {/* <h1> {calendarRef.current?.getApi().view.title}</h1> */}
 
-        {/* <h2>January 2019</h2> */}
+          {/* <h2>January 2019</h2> */}
+        </Row>
       </div>
       <FullCalendar
         ref={calendarRef}
